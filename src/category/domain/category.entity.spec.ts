@@ -1,11 +1,14 @@
+import { EntityValidationError } from "../../shared/domain/validator/validation.error";
+import { UUID } from "../../shared/domain/value-object/uuid.value-object";
 import { Category } from "./category.entity";
 
-describe("Category Unit Test", () => {
+describe("Category", () => {
   it("creates a new category", () => {
     const category = new Category({
       name: "Movie",
     });
     expect(category.id).toBeDefined();
+    expect(category.id).toBeInstanceOf(UUID);
     expect(category.name).toBe("Movie");
     expect(category.description).toBeNull();
     expect(category.isActive).toBe(true);
@@ -62,11 +65,36 @@ describe("Category Unit Test", () => {
     });
     const json = category.toJSON();
     expect(json).toEqual({
-      id: category.id,
+      id: category.id.value,
       name: "Movie",
       description: null,
       isActive: true,
       createdAt: category.createdAt,
     });
+  });
+
+  it("calls validate method", () => {
+    const validateSpy = jest.spyOn(Category, "validate");
+    const category = Category.create({
+      name: "Movie",
+    });
+    expect(validateSpy).toHaveBeenCalledTimes(1);
+    expect(validateSpy).toHaveBeenCalledWith(category);
+    category.changeName("Film");
+    expect(validateSpy).toHaveBeenCalledTimes(2);
+    expect(validateSpy).toHaveBeenCalledWith(category);
+    category.changeDescription("Some movies");
+    expect(validateSpy).toHaveBeenCalledTimes(3);
+    expect(validateSpy).toHaveBeenCalledWith(category);
+  });
+
+  it("throws an error if category is invalid", () => {
+    expect(() => {
+      Category.create({
+        name: "",
+      });
+    }).toThrow(
+      new EntityValidationError({ name: ["name should not be empty"] })
+    );
   });
 });
