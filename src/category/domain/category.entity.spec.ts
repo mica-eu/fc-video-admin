@@ -1,5 +1,4 @@
 import { EntityValidationError } from "../../shared/domain/validator/validation.error";
-import { UUID } from "../../shared/domain/value-object/uuid.value-object";
 import { Category } from "./category.entity";
 
 describe("Category", () => {
@@ -8,7 +7,6 @@ describe("Category", () => {
       name: "Movie",
     });
     expect(category.id).toBeDefined();
-    expect(category.id).toBeInstanceOf(UUID);
     expect(category.name).toBe("Movie");
     expect(category.description).toBeNull();
     expect(category.isActive).toBe(true);
@@ -65,7 +63,7 @@ describe("Category", () => {
     });
     const json = category.toJSON();
     expect(json).toEqual({
-      id: category.id.value,
+      id: category.id,
       name: "Movie",
       description: null,
       isActive: true,
