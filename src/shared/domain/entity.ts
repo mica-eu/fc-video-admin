@@ -1,4 +1,6 @@
+import { ValueObject } from "./value-object/value-object";
+
 export abstract class Entity {
-  abstract get id(): string;
+  abstract get id(): ValueObject;
   abstract toJSON(): any;
 }

@@ -33,8 +33,8 @@ export class Category extends Entity {
     this.createdAt = props.createdAt ?? new Date();
   }
 
-  get id(): string {
-    return `${this.#id.value}`;
+  get id(): UUID {
+    return this.#id;
   }
 
   changeName(name: string): void {

@@ -63,7 +63,7 @@ describe("Category", () => {
     });
     const json = category.toJSON();
     expect(json).toEqual({
-      id: category.id,
+      id: category.id.value,
       name: "Movie",
       description: null,
       isActive: true,
