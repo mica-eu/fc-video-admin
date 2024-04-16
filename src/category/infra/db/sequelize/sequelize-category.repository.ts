@@ -7,6 +7,7 @@ import {
 import { UUID } from "../../../../shared/domain/value-object/uuid.value-object";
 import { Category } from "../../../domain/category.entity";
 import { CategoryModel } from "./category.model";
+import { CategoryMapper } from "./category.mapper";
 
 export class SequelizeCategoryRepository
   implements ISearchableRepository<Category, UUID>
@@ -25,28 +26,14 @@ export class SequelizeCategoryRepository
       offset,
     });
     return {
-      items: rows.map((category) =>
-        Category.create({
-          id: new UUID(category.id),
-          name: category.name,
-          description: category.description,
-          isActive: category.isActive,
-          createdAt: category.createdAt,
-        })
-      ),
+      items: rows.map((category) => CategoryMapper.toEntity(category)),
       total: count,
       page,
     };
   }
 
   async insert(entity: Category): Promise<void> {
-    this.categoryModel.create({
-      id: entity.id.value,
-      name: entity.name,
-      description: entity.description,
-      isActive: entity.isActive,
-      createdAt: entity.createdAt,
-    });
+    this.categoryModel.create(CategoryMapper.toModel(entity));
   }
 
   async update(entity: Category): Promise<void> {
@@ -74,25 +61,11 @@ export class SequelizeCategoryRepository
     if (!category) {
       return null;
     }
-    return Category.create({
-      id: new UUID(category.id),
-      name: category.name,
-      description: category.description,
-      isActive: category.isActive,
-      createdAt: category.createdAt,
-    });
+    return CategoryMapper.toEntity(category);
   }
 
   async list(): Promise<Category[]> {
     const categories = await this.categoryModel.findAll();
-    return categories.map((category) =>
-      Category.create({
-        id: new UUID(category.id),
-        name: category.name,
-        description: category.description,
-        isActive: category.isActive,
-        createdAt: category.createdAt,
-      })
-    );
+    return categories.map((category) => CategoryMapper.toEntity(category));
   }
 }

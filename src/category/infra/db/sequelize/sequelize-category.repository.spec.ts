@@ -3,6 +3,7 @@ import { CategoryModel } from "./category.model";
 import { SequelizeCategoryRepository } from "./sequelize-category.repository";
 import { Category } from "../../../domain/category.entity";
 import { UUID } from "../../../../shared/domain/value-object/uuid.value-object";
+import { CategoryMapper } from "./category.mapper";
 
 describe("SequelizeCategoryRepository", () => {
   beforeEach(async () => {
@@ -91,9 +92,7 @@ describe("SequelizeCategoryRepository", () => {
     });
     await categoryRepository.insert(category);
     const result = await categoryRepository.find(category.id);
-    expect(result?.id.value).toEqual(category.id.value);
-    expect(result?.name).toBe("Category 1");
-    expect(result?.description).toBe("Description 1");
+    expect(category.toJSON()).toEqual(result?.toJSON());
   });
 
   it("returns null when finding a category that does not exist", async () => {
@@ -118,12 +117,7 @@ describe("SequelizeCategoryRepository", () => {
     await categoryRepository.insert(category2);
     const result = await categoryRepository.list();
     expect(result).toHaveLength(2);
-    expect(result[0].id.value).toEqual(category1.id.value);
-    expect(result[0].name).toBe("Category 1");
-    expect(result[0].description).toBe("Description 1");
-    expect(result[1].id.value).toEqual(category2.id.value);
-    expect(result[1].name).toBe("Category 2");
-    expect(result[1].description).toBe("Description 2");
+    expect(result).toEqual([category1, category2]);
   });
 
   it("returns an empty array when there are no categories", async () => {

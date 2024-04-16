@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import { CategoryModel } from "./category.model";
+import { CategoryMapper } from "./category.mapper";
 
 describe("CategoryModel", () => {
   beforeAll(async () => {
@@ -25,13 +26,13 @@ describe("CategoryModel", () => {
     expect(category.description).toBe("Description");
     expect(category.isActive).toBe(true);
     expect(category.createdAt).toBeInstanceOf(Date);
-    expect(Object.keys(CategoryModel.getAttributes())).toEqual([
-      "id",
-      "name",
-      "description",
-      "isActive",
-      "createdAt",
-    ]);
+    expect(CategoryMapper.toEntity(category).toJSON()).toEqual({
+      createdAt: expect.any(Date),
+      description: "Description",
+      id: "69cde876-e1dd-471e-8bb4-bcfe9a719086",
+      isActive: true,
+      name: "Category 1",
+    });
   });
 
   it("updates a category", async () => {
