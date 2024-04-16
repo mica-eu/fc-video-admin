@@ -1,6 +1,6 @@
 import { Entity } from "../../entity";
 import { UUID } from "../../value-object/uuid.value-object";
-import { InMemoryRepository } from "./in-memory.repository";
+import { InMemoryRepository } from "./in-memory-repository";
 
 class StubEntity extends Entity {
   #id: UUID;

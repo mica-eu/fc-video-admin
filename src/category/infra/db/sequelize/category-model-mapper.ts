@@ -1,8 +1,8 @@
 import { UUID } from "../../../../shared/domain/value-object/uuid.value-object";
-import { Category } from "../../../domain/category.entity";
-import { CategoryModel, CategoryModelAttributes } from "./category.model";
+import { Category } from "../../../domain/category-entity";
+import { CategoryModel, CategoryModelAttributes } from "./category-model";
 
-export class CategoryMapper {
+export class CategoryModelMapper {
   static toEntity(categoryModel: CategoryModel): Category {
     return Category.create({
       id: new UUID(categoryModel.id),

@@ -1,5 +1,5 @@
 import { Entity } from "../../entity";
-import { NotFoundError } from "../../error/not-found.error";
+import { NotFoundError } from "../../error/not-found-error";
 import {
   IRepository,
   ISearchableRepository,

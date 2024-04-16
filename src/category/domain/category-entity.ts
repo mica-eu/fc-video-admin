@@ -1,7 +1,7 @@
 import { Entity } from "../../shared/domain/entity";
-import { EntityValidationError } from "../../shared/domain/validator/validation.error";
+import { EntityValidationError } from "../../shared/domain/validator/validation-error";
 import { UUID } from "../../shared/domain/value-object/uuid.value-object";
-import { CategoryValidatorFactory } from "./category.validator";
+import { CategoryValidatorFactory } from "./category-validator";
 
 export type CategoryConstructorProps = {
   id?: UUID;

@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
-import { CategoryModel } from "./category.model";
-import { SequelizeCategoryRepository } from "./sequelize-category.repository";
-import { Category } from "../../../domain/category.entity";
+import { CategoryModel } from "./category-model";
+import { SequelizeCategoryRepository } from "./sequelize-category-repository";
+import { Category } from "../../../domain/category-entity";
 import { UUID } from "../../../../shared/domain/value-object/uuid.value-object";
-import { CategoryMapper } from "./category.mapper";
+import { CategoryModelMapper } from "./category-model-mapper";
 
 describe("SequelizeCategoryRepository", () => {
   beforeEach(async () => {

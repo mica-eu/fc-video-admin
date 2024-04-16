@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsBoolean,
 } from "class-validator";
-import { Category } from "./category.entity";
+import { Category } from "./category-entity";
 import { ClassValidatorFields } from "../../shared/domain/validator/class-validator-fields";
 
 export class CategoryRules {

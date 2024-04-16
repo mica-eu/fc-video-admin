@@ -1,5 +1,5 @@
-import { EntityValidationError } from "../../shared/domain/validator/validation.error";
-import { Category } from "./category.entity";
+import { EntityValidationError } from "../../shared/domain/validator/validation-error";
+import { Category } from "./category-entity";
 
 describe("Category", () => {
   it("creates a new category", () => {

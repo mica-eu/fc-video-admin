@@ -1,5 +1,5 @@
-import { Category } from "./category.entity";
-import { CategoryValidator } from "./category.validator";
+import { Category } from "./category-entity";
+import { CategoryValidator } from "./category-validator";
 
 describe("CategoryValidator", () => {
   it("validates the category name", () => {

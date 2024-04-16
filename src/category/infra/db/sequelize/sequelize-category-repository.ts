@@ -5,9 +5,9 @@ import {
   SearchResult,
 } from "../../../../shared/domain/repository/repository-interface";
 import { UUID } from "../../../../shared/domain/value-object/uuid.value-object";
-import { Category } from "../../../domain/category.entity";
-import { CategoryModel } from "./category.model";
-import { CategoryMapper } from "./category.mapper";
+import { Category } from "../../../domain/category-entity";
+import { CategoryModel } from "./category-model";
+import { CategoryModelMapper } from "./category-model-mapper";
 
 export class SequelizeCategoryRepository
   implements ISearchableRepository<Category, UUID>
@@ -26,14 +26,14 @@ export class SequelizeCategoryRepository
       offset,
     });
     return {
-      items: rows.map((category) => CategoryMapper.toEntity(category)),
+      items: rows.map((category) => CategoryModelMapper.toEntity(category)),
       total: count,
       page,
     };
   }
 
   async insert(entity: Category): Promise<void> {
-    this.categoryModel.create(CategoryMapper.toModel(entity));
+    this.categoryModel.create(CategoryModelMapper.toModel(entity));
   }
 
   async update(entity: Category): Promise<void> {
@@ -61,11 +61,11 @@ export class SequelizeCategoryRepository
     if (!category) {
       return null;
     }
-    return CategoryMapper.toEntity(category);
+    return CategoryModelMapper.toEntity(category);
   }
 
   async list(): Promise<Category[]> {
     const categories = await this.categoryModel.findAll();
-    return categories.map((category) => CategoryMapper.toEntity(category));
+    return categories.map((category) => CategoryModelMapper.toEntity(category));
   }
 }
