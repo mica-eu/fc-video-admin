@@ -14,19 +14,19 @@ describe("CategoryModel", () => {
 
   it("creates a category", async () => {
     const category = await CategoryModel.create({
-      categoryId: "69cde876-e1dd-471e-8bb4-bcfe9a719086",
+      id: "69cde876-e1dd-471e-8bb4-bcfe9a719086",
       name: "Category 1",
       description: "Description",
       isActive: true,
       createdAt: new Date(),
     });
-    expect(category.categoryId).toBe("69cde876-e1dd-471e-8bb4-bcfe9a719086");
+    expect(category.id).toBe("69cde876-e1dd-471e-8bb4-bcfe9a719086");
     expect(category.name).toBe("Category 1");
     expect(category.description).toBe("Description");
     expect(category.isActive).toBe(true);
     expect(category.createdAt).toBeInstanceOf(Date);
     expect(Object.keys(CategoryModel.getAttributes())).toEqual([
-      "categoryId",
+      "id",
       "name",
       "description",
       "isActive",
