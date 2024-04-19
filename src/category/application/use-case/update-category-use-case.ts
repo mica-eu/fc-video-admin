@@ -1,22 +1,20 @@
-import { IUseCase } from "../../shared/application/use-case-interface";
-import { NotFoundError } from "../../shared/domain/error/not-found-error";
-import { UUID } from "../../shared/domain/value-object/uuid.value-object";
-import { ICategoryRepository } from "../domain/category-repository";
+import { IUseCase } from "../../../shared/application/use-case-interface";
+import { NotFoundError } from "../../../shared/domain/error/not-found-error";
+import { UUID } from "../../../shared/domain/value-object/uuid.value-object";
+import { ICategoryRepository } from "../../domain/category-repository";
+import {
+  CategoryMapperOutput,
+  CategoryOutputMapper,
+} from "../common/category-output-mapper";
 
-export interface UpdateCategoryUseCaseInput {
+export type UpdateCategoryUseCaseInput = {
   id: string;
   name?: string;
   description?: string;
   isActive?: boolean;
-}
+};
 
-export interface UpdateCategoryUseCaseOutput {
-  id: string;
-  name: string;
-  description: string | null;
-  isActive: boolean;
-  createdAt: Date;
-}
+export type UpdateCategoryUseCaseOutput = CategoryMapperOutput;
 
 export class UpdateCategoryUseCase
   implements IUseCase<UpdateCategoryUseCaseInput, UpdateCategoryUseCaseOutput>
@@ -24,7 +22,7 @@ export class UpdateCategoryUseCase
   constructor(private categoryRepository: ICategoryRepository) {}
 
   async execute(
-    input: UpdateCategoryUseCaseInput
+    input: UpdateCategoryUseCaseInput,
   ): Promise<UpdateCategoryUseCaseOutput> {
     const category = await this.categoryRepository.find(new UUID(input.id));
     if (!category) {
@@ -40,12 +38,6 @@ export class UpdateCategoryUseCase
       input.isActive === true ? category.activate() : category.deactivate();
     }
     await this.categoryRepository.update(category);
-    return {
-      id: category.id.value,
-      name: category.name,
-      description: category.description,
-      isActive: category.isActive,
-      createdAt: category.createdAt,
-    };
+    return CategoryOutputMapper.toDTO(category);
   }
 }

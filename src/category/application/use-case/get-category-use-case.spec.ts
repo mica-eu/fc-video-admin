@@ -1,6 +1,6 @@
-import { Category } from "../domain/category-entity";
-import { ICategoryRepository } from "../domain/category-repository";
-import { InMemoryCategoryRepository } from "../infra/db/in-memory/in-memory-category-repository";
+import { Category } from "../../domain/category-entity";
+import { ICategoryRepository } from "../../domain/category-repository";
+import { InMemoryCategoryRepository } from "../../infra/db/in-memory/in-memory-category-repository";
 import { GetCategoryUseCase } from "./get-category-use-case";
 
 describe("GetCategoryUseCase", () => {
@@ -27,7 +27,7 @@ describe("GetCategoryUseCase", () => {
 
   it("throws an error if the category does not exist", async () => {
     await expect(
-      useCase.execute("db07e561-2738-4e20-acaa-69a432ddd8b2")
+      useCase.execute("db07e561-2738-4e20-acaa-69a432ddd8b2"),
     ).rejects.toThrow("Category not found");
   });
 });

@@ -1,7 +1,7 @@
-import { UUID } from "../../shared/domain/value-object/uuid.value-object";
-import { Category } from "../domain/category-entity";
-import { ICategoryRepository } from "../domain/category-repository";
-import { InMemoryCategoryRepository } from "../infra/db/in-memory/in-memory-category-repository";
+import { UUID } from "../../../shared/domain/value-object/uuid.value-object";
+import { Category } from "../../domain/category-entity";
+import { ICategoryRepository } from "../../domain/category-repository";
+import { InMemoryCategoryRepository } from "../../infra/db/in-memory/in-memory-category-repository";
 import {
   CreateCategoryUseCase,
   CreateCategoryUseCaseInput,
@@ -26,7 +26,7 @@ describe("CreateCategoryUseCase", () => {
     await createCategoryUseCase.execute(input);
     expect(categoryRepository.insert).toHaveBeenCalledTimes(1);
     expect(categoryRepository.insert).toHaveBeenCalledWith(
-      expect.any(Category)
+      expect.any(Category),
     );
     expect(categoryRepository.insert).toHaveBeenCalledWith({
       id: expect.any(UUID),

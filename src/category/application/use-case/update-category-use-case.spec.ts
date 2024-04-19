@@ -1,8 +1,7 @@
-import { each } from "lodash";
-import { UUID } from "../../shared/domain/value-object/uuid.value-object";
-import { Category } from "../domain/category-entity";
-import { ICategoryRepository } from "../domain/category-repository";
-import { InMemoryCategoryRepository } from "../infra/db/in-memory/in-memory-category-repository";
+import { UUID } from "../../../shared/domain/value-object/uuid.value-object";
+import { Category } from "../../domain/category-entity";
+import { ICategoryRepository } from "../../domain/category-repository";
+import { InMemoryCategoryRepository } from "../../infra/db/in-memory/in-memory-category-repository";
 import {
   UpdateCategoryUseCase,
   UpdateCategoryUseCaseInput,
@@ -135,6 +134,16 @@ describe("UpdateCategoryUseCase", () => {
         isActive: input.isActive,
         createdAt: category.createdAt,
       });
-    }
+    },
   );
+
+  it("throws an error if category does not exist", async () => {
+    const input: UpdateCategoryUseCaseInput = {
+      id: new UUID().value,
+      name: "Category Name",
+    };
+    await expect(updateCategoryUseCase.execute(input)).rejects.toThrow(
+      "Category not found",
+    );
+  });
 });
