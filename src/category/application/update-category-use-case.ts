@@ -1,4 +1,5 @@
 import { IUseCase } from "../../shared/application/use-case-interface";
+import { NotFoundError } from "../../shared/domain/error/not-found-error";
 import { UUID } from "../../shared/domain/value-object/uuid.value-object";
 import { ICategoryRepository } from "../domain/category-repository";
 
@@ -27,7 +28,7 @@ export class UpdateCategoryUseCase
   ): Promise<UpdateCategoryUseCaseOutput> {
     const category = await this.categoryRepository.find(new UUID(input.id));
     if (!category) {
-      throw new Error("Category not found");
+      throw new NotFoundError("Category not found");
     }
     if ("name" in input) {
       category.changeName(input.name!);

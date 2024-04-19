@@ -8,6 +8,7 @@ import { UUID } from "../../../../shared/domain/value-object/uuid.value-object";
 import { Category } from "../../../domain/category-entity";
 import { CategoryModel } from "./category-model";
 import { CategoryModelMapper } from "./category-model-mapper";
+import { NotFoundError } from "../../../../shared/domain/error/not-found-error";
 
 export class SequelizeCategoryRepository
   implements ISearchableRepository<Category, UUID>
@@ -39,7 +40,7 @@ export class SequelizeCategoryRepository
   async update(entity: Category): Promise<void> {
     const category = await this.categoryModel.findByPk(entity.id.value);
     if (!category) {
-      throw new Error("Category not found");
+      throw new NotFoundError("Category not found");
     }
     await category.update({
       name: entity.name,
@@ -51,7 +52,7 @@ export class SequelizeCategoryRepository
   async delete(id: UUID): Promise<void> {
     const category = await this.categoryModel.findByPk(id.value);
     if (!category) {
-      throw new Error("Category not found");
+      throw new NotFoundError("Category not found");
     }
     await category.destroy();
   }
