@@ -55,14 +55,16 @@ export abstract class InMemorySearchableRepository<
 
   async search(input: SearchParams<string>): Promise<SearchResult<E>> {
     const { page, limit, sortBy, sortOrder, search } = input;
-    const items = this.items.filter((item) => {
-      const jsonItem = item.toJSON();
-      return Object.keys(jsonItem).some((key) => {
-        return (jsonItem as { [key: string]: any })[key]
-          .toString()
-          .includes(search);
-      });
-    });
+    const items = !!search
+      ? this.items.filter((item) => {
+          const jsonItem = item.toJSON();
+          return Object.keys(jsonItem).some((key) => {
+            return (jsonItem as { [key: string]: any })[key]
+              ?.toString()
+              .includes(search);
+          });
+        })
+      : this.items;
     items.sort((a, b) => {
       const jsonA = a.toJSON();
       const jsonB = b.toJSON();
