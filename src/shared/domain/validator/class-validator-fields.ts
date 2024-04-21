@@ -1,11 +1,8 @@
 import { validateSync } from "class-validator";
-import {
-  FieldsErrors,
-  ValidatorFieldsInterface,
-} from "./validator-fields-interface";
+import { FieldsErrors, IValidatorFields } from "./validator-fields-interface";
 
 export abstract class ClassValidatorFields<PropsValidated>
-  implements ValidatorFieldsInterface<PropsValidated>
+  implements IValidatorFields<PropsValidated>
 {
   errors: FieldsErrors | null = null;
   validatedData: PropsValidated | null = null;
